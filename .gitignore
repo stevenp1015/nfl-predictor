@@ -5,6 +5,14 @@
 /.pnp
 .pnp.js
 .venv
+.env
+.vscode
+.yarn
+.yarn-integrity
+yarn.lock
+package-lock.json
+node_modules
+
 
 # testing
 /coverage
