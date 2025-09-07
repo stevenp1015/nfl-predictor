@@ -3,16 +3,13 @@ import React from 'react';
 const PredictionDisplay = ({ prediction }) => {
   if (!prediction) return null;
 
+  // Helper to determine the color of the impact lozenges
   const getImpactColor = (impact) => {
     switch (impact) {
-      case 'High':
-        return 'bg-red-100 text-red-800';
-      case 'Medium':
-        return 'bg-yellow-100 text-yellow-800';
-      case 'Low':
-        return 'bg-green-100 text-green-800';
-      default:
-        return 'bg-gray-100 text-gray-800';
+      case 'High': return 'bg-red-100 text-red-800';
+      case 'Medium': return 'bg-yellow-100 text-yellow-800';
+      case 'Low': return 'bg-green-100 text-green-800';
+      default: return 'bg-gray-100 text-gray-800';
     }
   };
 
@@ -24,13 +21,14 @@ const PredictionDisplay = ({ prediction }) => {
             Predicted Margin
           </div>
           <div className="mt-1 text-3xl font-semibold text-gray-900">
-            {prediction.predictedMargin}
+            {prediction.predictedMargin > 0 ? `+${prediction.predictedMargin}` : prediction.predictedMargin}
           </div>
         </div>
         <div className="text-center">
           <div className="text-sm font-medium text-gray-500">
             Win Probability
           </div>
+          {/* THE FIX: We multiply by 100 HERE and ONLY here */}
           <div className="mt-1 text-3xl font-semibold text-gray-900">
             {(prediction.winProbability * 100).toFixed(1)}%
           </div>
@@ -39,6 +37,7 @@ const PredictionDisplay = ({ prediction }) => {
           <div className="text-sm font-medium text-gray-500">
             Confidence Score
           </div>
+          {/* THE FIX: We multiply by 100 HERE and ONLY here */}
           <div className="mt-1 text-3xl font-semibold text-gray-900">
             {(prediction.confidenceScore * 100).toFixed(1)}%
           </div>
