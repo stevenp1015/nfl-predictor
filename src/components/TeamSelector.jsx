@@ -43,13 +43,13 @@ const TeamSelector = ({ label, value, onChange }) => {
 
   return (
     <div>
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block gr-text-base font-medium text-gray-700">
         {label}
       </label>
       <select
         value={value || ''}
         onChange={(e) => onChange(e.target.value)}
-        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+        className="gr-mt-5 block w-full gr-rounded-8 border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 gr-py-8 gr-px-13 gr-text-base"
       >
         <option value="">Select Team</option>
         {Object.entries(nflTeams).map(([conference, teams]) => (

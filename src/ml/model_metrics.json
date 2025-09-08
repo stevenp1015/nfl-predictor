@@ -1,0 +1,65 @@
+{
+    "winner_accuracy": 87.3,
+    "within_3_points": 35.0,
+    "within_7_points": 69.4,
+    "feature_importance": [
+        {
+            "feature": "yards_per_play_home",
+            "importance": 0.18288833195865814
+        },
+        {
+            "feature": "turnovers_away",
+            "importance": 0.18233331135136582
+        },
+        {
+            "feature": "yards_per_play_away",
+            "importance": 0.16458343003046433
+        },
+        {
+            "feature": "turnovers_home",
+            "importance": 0.1566015477648837
+        },
+        {
+            "feature": "possession_minutes_away",
+            "importance": 0.07089015408587569
+        },
+        {
+            "feature": "third_down_rate_away",
+            "importance": 0.06403043702497829
+        },
+        {
+            "feature": "third_down_rate_home",
+            "importance": 0.06089763190156074
+        },
+        {
+            "feature": "possession_minutes_home",
+            "importance": 0.05575902255912302
+        },
+        {
+            "feature": "redzone_rate_away",
+            "importance": 0.02384995911335063
+        },
+        {
+            "feature": "redzone_rate_home",
+            "importance": 0.019512823772016668
+        },
+        {
+            "feature": "weather_temperature",
+            "importance": 0.011177745172975203
+        },
+        {
+            "feature": "weather_wind_mph",
+            "importance": 0.007475605264747767
+        }
+    ],
+    "optimal_k": 0.3022460937500001,
+    "confidence_map": {
+        "0-2": 60.0,
+        "2-4": 66.9,
+        "4-6": 88.6,
+        "6-8": 94.4,
+        "8-10": 93.9,
+        "10-14": 95.1,
+        "14+": 99.2
+    }
+}

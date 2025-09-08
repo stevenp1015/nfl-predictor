@@ -1,5 +1,245 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
-/* keep any other styles you might have below */
+/* Golden Ratio Design System - φ = 1.618 */
+/* Fibonacci sequence approximating golden ratio: 3, 5, 8, 13, 21, 34, 55, 89, 144 */
+:root {
+  --golden-ratio: 1.618;
+  --space-3: 0.1875rem;    /* 3px */
+  --space-5: 0.3125rem;    /* 5px */
+  --space-8: 0.5rem;       /* 8px */
+  --space-13: 0.8125rem;   /* 13px */
+  --space-21: 1.3125rem;   /* 21px */
+  --space-34: 2.125rem;    /* 34px */
+  --space-55: 3.4375rem;   /* 55px */
+  --space-89: 5.5625rem;   /* 89px */
+  --space-144: 9rem;       /* 144px */
+  
+  --text-xs: 0.625rem;     /* 10px - base/1.618 */
+  --text-sm: 0.75rem;      /* 12px */
+  --text-base: 0.875rem;   /* 14px - base */
+  --text-md: 1rem;         /* 16px */
+  --text-lg: 1.125rem;     /* 18px */
+  --text-xl: 1.4175rem;    /* 22.68px - base * 1.618 */
+  --text-2xl: 1.75rem;     /* 28px */
+  --text-3xl: 2.25rem;     /* 36px */
+  --text-4xl: 2.8305rem;   /* 45.28px - xl * 1.618 */
+}
+
+/* Golden Ratio Utility Classes */
+.gr-p-3 { padding: var(--space-3); }
+.gr-p-5 { padding: var(--space-5); }
+.gr-p-8 { padding: var(--space-8); }
+.gr-p-13 { padding: var(--space-13); }
+.gr-p-21 { padding: var(--space-21); }
+.gr-p-34 { padding: var(--space-34); }
+.gr-p-55 { padding: var(--space-55); }
+
+.gr-px-3 { padding-left: var(--space-3); padding-right: var(--space-3); }
+.gr-px-5 { padding-left: var(--space-5); padding-right: var(--space-5); }
+.gr-px-8 { padding-left: var(--space-8); padding-right: var(--space-8); }
+.gr-px-13 { padding-left: var(--space-13); padding-right: var(--space-13); }
+.gr-px-21 { padding-left: var(--space-21); padding-right: var(--space-21); }
+.gr-px-34 { padding-left: var(--space-34); padding-right: var(--space-34); }
+
+.gr-py-3 { padding-top: var(--space-3); padding-bottom: var(--space-3); }
+.gr-py-5 { padding-top: var(--space-5); padding-bottom: var(--space-5); }
+.gr-py-8 { padding-top: var(--space-8); padding-bottom: var(--space-8); }
+.gr-py-13 { padding-top: var(--space-13); padding-bottom: var(--space-13); }
+.gr-py-21 { padding-top: var(--space-21); padding-bottom: var(--space-21); }
+.gr-py-34 { padding-top: var(--space-34); padding-bottom: var(--space-34); }
+.gr-py-55 { padding-top: var(--space-55); padding-bottom: var(--space-55); }
+
+.gr-m-3 { margin: var(--space-3); }
+.gr-m-5 { margin: var(--space-5); }
+.gr-m-8 { margin: var(--space-8); }
+.gr-m-13 { margin: var(--space-13); }
+.gr-m-21 { margin: var(--space-21); }
+.gr-m-34 { margin: var(--space-34); }
+
+.gr-mt-8 { margin-top: var(--space-8); }
+.gr-mt-13 { margin-top: var(--space-13); }
+.gr-mt-21 { margin-top: var(--space-21); }
+.gr-mt-34 { margin-top: var(--space-34); }
+
+.gr-mb-8 { margin-bottom: var(--space-8); }
+.gr-mb-13 { margin-bottom: var(--space-13); }
+.gr-mb-21 { margin-bottom: var(--space-21); }
+.gr-mb-34 { margin-bottom: var(--space-34); }
+
+.gr-gap-3 { gap: var(--space-3); }
+.gr-gap-5 { gap: var(--space-5); }
+.gr-gap-8 { gap: var(--space-8); }
+.gr-gap-13 { gap: var(--space-13); }
+.gr-gap-21 { gap: var(--space-21); }
+
+/* Typography using golden ratio */
+.gr-text-xs { font-size: var(--text-xs); }
+.gr-text-sm { font-size: var(--text-sm); }
+.gr-text-base { font-size: var(--text-base); }
+.gr-text-md { font-size: var(--text-md); }
+.gr-text-lg { font-size: var(--text-lg); }
+.gr-text-xl { font-size: var(--text-xl); }
+.gr-text-2xl { font-size: var(--text-2xl); }
+.gr-text-3xl { font-size: var(--text-3xl); }
+.gr-text-4xl { font-size: var(--text-4xl); }
+
+/* Border radius using golden ratio */
+.gr-rounded-3 { border-radius: var(--space-3); }
+.gr-rounded-5 { border-radius: var(--space-5); }
+.gr-rounded-8 { border-radius: var(--space-8); }
+.gr-rounded-13 { border-radius: var(--space-13); }
+
+/* Button heights using golden ratio */
+.gr-btn-sm { height: var(--space-34); padding: var(--space-5) var(--space-13); }
+.gr-btn-md { height: var(--space-55); padding: var(--space-8) var(--space-21); }
+.gr-btn-lg { height: var(--space-89); padding: var(--space-13) var(--space-34); }
+
+/* Standardized button styles */
+.gr-btn {
+  font-weight: 600;
+  border-radius: var(--space-8);
+  transition: all 0.2s ease-in-out;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid;
+  text-decoration: none;
+  box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.317);
+}
+
+.gr-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.gr-btn-primary {
+  background-color: zinc-100;
+  color: slate-800;
+}
+.gr-btn-primary:hover:not(:disabled) {
+  background-color: zinc-200;
+  color: slate-900;
+}
+
+.gr-btn-success {
+  background-color: #16a34a;
+  color: white;
+}
+.gr-btn-success:hover:not(:disabled) {
+  background-color: #15803d;
+}
+
+.gr-btn-danger {
+  background-color: #dc2626;
+  color: white;
+}
+.gr-btn-danger:hover:not(:disabled) {
+  background-color: #b91c1c;
+}
+
+.gr-btn-outline {
+  background-color: transparent;
+  border: 1px solid #d1d5db;
+  color: #374151;
+}
+.gr-btn-outline:hover:not(:disabled) {
+  background-color: #f9fafb;
+  border-color: #9ca3af;
+}
+
+/* Standardized error and success message styling */
+.gr-message {
+  padding: var(--space-13);
+  border-radius: var(--space-8);
+  font-size: var(--text-base);
+  font-weight: 500;
+}
+
+.gr-message-error {
+  background-color: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.gr-message-success {
+  background-color: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.gr-message-info {
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+}
+
+
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 240 5.9% 10%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 240 4.8% 95.9%;
+    --secondary-foreground: 240 5.9% 10%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 240 4.8% 95.9%;
+    --accent-foreground: 240 5.9% 10%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 240 10% 3.9%;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+    --radius: 0.5rem;
+  }
+  .dark {
+    --background: 240 10% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 240 10% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 240 10% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 240 5.9% 10%;
+    --secondary: 240 3.7% 15.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 3.7% 15.9%;
+    --muted-foreground: 240 5% 64.9%;
+    --accent: 240 3.7% 15.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 3.7% 15.9%;
+    --input: 240 3.7% 15.9%;
+    --ring: 240 4.9% 83.9%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+  }
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+  }
+}

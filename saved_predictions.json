@@ -1,0 +1,269 @@
+[
+  {
+    "homeTeam": "LAC",
+    "awayTeam": "KC",
+    "prediction": {
+      "predictedMargin": 1.2,
+      "winProbability": 0.5896927362679978,
+      "confidenceScore": 0.6,
+      "keyFactors": [
+        {
+          "factor": "Yards Per Play (Home)",
+          "impact": "High"
+        },
+        {
+          "factor": "Turnovers (Away)",
+          "impact": "High"
+        },
+        {
+          "factor": "Yards Per Play (Away)",
+          "impact": "High"
+        }
+      ]
+    },
+    "matchup": "KC @ LAC",
+    "id": "1757285065.742352",
+    "timestamp": "2025-09-07T18:44:25.742363"
+  },
+  {
+    "homeTeam": "PHI",
+    "awayTeam": "DAL",
+    "prediction": {
+      "predictedMargin": 5.4,
+      "winProbability": 0.8364610689094675,
+      "confidenceScore": 0.8859999999999999,
+      "keyFactors": [
+        {
+          "factor": "Yards Per Play (Home)",
+          "impact": "High"
+        },
+        {
+          "factor": "Turnovers (Away)",
+          "impact": "High"
+        },
+        {
+          "factor": "Yards Per Play (Away)",
+          "impact": "High"
+        }
+      ]
+    },
+    "matchup": "DAL @ PHI",
+    "id": "1757285650.653389",
+    "timestamp": "2025-09-07T18:54:10.653399",
+    "updatedAt": "2025-09-07T20:19:03.907040"
+  },
+  {
+    "homeTeam": "ATL",
+    "awayTeam": "TB",
+    "prediction": {
+      "predictedMargin": -3.7,
+      "winProbability": 0.7536752057882149,
+      "confidenceScore": 0.669
+    },
+    "matchup": "Tampa Bay Buccaneers @ Atlanta Falcons",
+    "gameId": 17316,
+    "venue": "Mercedes-Benz Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285703.527321",
+    "timestamp": "2025-09-07T18:55:03.527331"
+  },
+  {
+    "homeTeam": "CLE",
+    "awayTeam": "CIN",
+    "prediction": {
+      "predictedMargin": -7.8,
+      "winProbability": 0.9135300670034484,
+      "confidenceScore": 0.9440000000000001
+    },
+    "matchup": "Cincinnati Bengals @ Cleveland Browns",
+    "gameId": 17317,
+    "venue": "Huntington Bank Field",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285732.685646",
+    "timestamp": "2025-09-07T18:55:32.685656"
+  },
+  {
+    "homeTeam": "IND",
+    "awayTeam": "MIA",
+    "prediction": {
+      "predictedMargin": -5.3,
+      "winProbability": 0.8322843686346152,
+      "confidenceScore": 0.8859999999999999
+    },
+    "matchup": "Miami Dolphins @ Indianapolis Colts",
+    "gameId": 17318,
+    "venue": "Lucas Oil Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285736.680236",
+    "timestamp": "2025-09-07T18:55:36.680246"
+  },
+  {
+    "homeTeam": "NE",
+    "awayTeam": "LV",
+    "prediction": {
+      "predictedMargin": 5.9,
+      "winProbability": 0.8560979519409893,
+      "confidenceScore": 0.8859999999999999
+    },
+    "matchup": "Las Vegas Raiders @ New England Patriots",
+    "gameId": 17319,
+    "venue": "Gillette Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285738.133001",
+    "timestamp": "2025-09-07T18:55:38.133011"
+  },
+  {
+    "homeTeam": "NO",
+    "awayTeam": "ARI",
+    "prediction": {
+      "predictedMargin": -5.6,
+      "winProbability": 0.8445629075828585,
+      "confidenceScore": 0.8859999999999999
+    },
+    "matchup": "Arizona Cardinals @ New Orleans Saints",
+    "gameId": 17320,
+    "venue": "Caesars Superdome",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285739.598485",
+    "timestamp": "2025-09-07T18:55:39.598497"
+  },
+  {
+    "homeTeam": "WAS",
+    "awayTeam": "NYG",
+    "prediction": {
+      "predictedMargin": 6.8,
+      "winProbability": 0.886479386711973,
+      "confidenceScore": 0.9440000000000001
+    },
+    "matchup": "New York Giants @ Washington Commanders",
+    "gameId": 17322,
+    "venue": "Northwest Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285744.349096",
+    "timestamp": "2025-09-07T18:55:44.349106"
+  },
+  {
+    "homeTeam": "JAX",
+    "awayTeam": "CAR",
+    "prediction": {
+      "predictedMargin": -3.3,
+      "winProbability": 0.7305494643082291,
+      "confidenceScore": 0.669
+    },
+    "matchup": "Carolina Panthers @ Jacksonville Jaguars",
+    "gameId": 17323,
+    "venue": "EverBank Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285746.096404",
+    "timestamp": "2025-09-07T18:55:46.096414"
+  },
+  {
+    "homeTeam": "NYJ",
+    "awayTeam": "PIT",
+    "prediction": {
+      "predictedMargin": 1.7,
+      "winProbability": 0.6257011595868778,
+      "confidenceScore": 0.6
+    },
+    "matchup": "Pittsburgh Steelers @ New York Jets",
+    "gameId": 17321,
+    "venue": "MetLife Stadium",
+    "date": "2025-09-07",
+    "time": "17:00",
+    "id": "1757285826.511155",
+    "timestamp": "2025-09-07T18:57:06.511166"
+  },
+  {
+    "homeTeam": "GB",
+    "awayTeam": "DET",
+    "prediction": {
+      "predictedMargin": -3.5,
+      "winProbability": 0.7422816302432194,
+      "confidenceScore": 0.669
+    },
+    "matchup": "Detroit Lions @ Green Bay Packers",
+    "gameId": 17326,
+    "venue": "Lambeau Field",
+    "date": "2025-09-07",
+    "time": "20:25",
+    "id": "1757290959.199646",
+    "timestamp": "2025-09-07T20:22:39.199661"
+  },
+  {
+    "homeTeam": "DEN",
+    "awayTeam": "TEN",
+    "prediction": {
+      "predictedMargin": 6.2,
+      "winProbability": 0.8669118699260517,
+      "confidenceScore": 0.9440000000000001,
+      "keyFactors": [
+        {
+          "factor": "Yards Per Play (Home)",
+          "impact": "High"
+        },
+        {
+          "factor": "Turnovers (Away)",
+          "impact": "High"
+        },
+        {
+          "factor": "Yards Per Play (Away)",
+          "impact": "High"
+        }
+      ]
+    },
+    "matchup": "Tennessee Titans @ Denver Broncos",
+    "id": "1757291036.115557",
+    "timestamp": "2025-09-07T20:23:56.115568",
+    "updatedAt": "2025-09-08T04:17:07.432490"
+  },
+  {
+    "homeTeam": "SEA",
+    "awayTeam": "SF",
+    "prediction": {
+      "predictedMargin": -0.7,
+      "winProbability": 0.5526966420270489,
+      "confidenceScore": 0.6
+    },
+    "matchup": "San Francisco 49ers @ Seattle Seahawks",
+    "gameId": 17325,
+    "venue": "Lumen Field",
+    "date": "2025-09-07",
+    "time": "20:05",
+    "id": "1757291037.876674",
+    "timestamp": "2025-09-07T20:23:57.876684"
+  },
+  {
+    "homeTeam": "LA",
+    "awayTeam": "HOU",
+    "prediction": {
+      "predictedMargin": -1,
+      "winProbability": 0.5749915010740407,
+      "confidenceScore": 0.6,
+      "keyFactors": [
+        {
+          "factor": "Yards Per Play (Home)",
+          "impact": "High"
+        },
+        {
+          "factor": "Turnovers (Away)",
+          "impact": "High"
+        },
+        {
+          "factor": "Yards Per Play (Away)",
+          "impact": "High"
+        }
+      ]
+    },
+    "matchup": "Houston Texans @ Los Angeles Rams",
+    "id": "1757291040.331249",
+    "timestamp": "2025-09-07T20:24:00.331261",
+    "updatedAt": "2025-09-08T04:18:37.768626"
+  }
+]

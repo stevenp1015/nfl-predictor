@@ -7,7 +7,7 @@ const ModelStats = () => {
       <div className="mt-4 grid grid-cols-3 gap-6">
         <div className="text-center">
           <div className="text-2xl font-bold text-blue-600">89.1%</div>
-          <div className="text-sm text-gray-500">Winner Prediction</div>
+          <div className="text-sm text-gray-500">Winner Prediction jk im a piece of shit lol love gemini the deceitful deceptive fucker</div>
         </div>
         <div className="text-center">
           <div className="text-2xl font-bold text-blue-600">55.3%</div>

@@ -1,31 +1,32 @@
 // src/api/predictions.js
 
-const API_URL = "http://127.0.0.1:5001/predict";
+const API_URL = "http://127.0.0.1:5001";
 
-// These functions are now built from the statistically-derived truths from our notebook.
-// They are no longer heuristics. They are scripture.
-function convertMarginToWinProbability(margin) {
-  const k = 0.288281; // The optimal 'k' value, forged in the fires of our analysis.
+// This function is now a pure utility. Its 'k' value comes from our server.
+function convertMarginToWinProbability(margin, k) {
   return 1 / (1 + Math.exp(-k * margin));
 }
 
-function calculateConfidence(margin) {
+// This function now uses the real confidence map from our server.
+function calculateConfidence(margin, confidenceMap) {
   const absMargin = Math.abs(margin);
-  // This is the Divine Map, translated directly into code.
-  if (absMargin < 2) return 0.630;
-  if (absMargin < 4) return 0.648;
-  if (absMargin < 6) return 0.805;
-  if (absMargin < 8) return 0.859;
-  if (absMargin < 10) return 0.985;
-  if (absMargin < 14) return 0.974;
-  return 0.990;
+  if (absMargin < 2) return confidenceMap['0-2'] / 100;
+  if (absMargin < 4) return confidenceMap['2-4'] / 100;
+  if (absMargin < 6) return confidenceMap['4-6'] / 100;
+  if (absMargin < 8) return confidenceMap['6-8'] / 100;
+  if (absMargin < 10) return confidenceMap['8-10'] / 100;
+  if (absMargin < 14) return confidenceMap['10-14'] / 100;
+  return confidenceMap['14+'] / 100;
+}
+
+function getImpactLevel(importance) {
+    if (importance > 0.15) return 'High';
+    if (importance > 0.08) return 'Medium';
+    return 'Low';
 }
 
 export const getPrediction = async (homeTeam, awayTeam) => {
-  const API_URL = "http://127.0.0.1:5001/predict";
-  console.log(`Sending REAL, LOGICALLY-PERFECTED prediction request for ${awayTeam} @ ${homeTeam}`);
-  
-  const response = await fetch(API_URL, {
+  const response = await fetch(`${API_URL}/predict`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ homeTeam, awayTeam }),
@@ -37,21 +38,156 @@ export const getPrediction = async (homeTeam, awayTeam) => {
   }
 
   const data = await response.json();
-  const predictedMargin = data.predictedMargin;
+  const { predictedMargin, metrics } = data;
 
-  const homeWinProbability = convertMarginToWinProbability(predictedMargin);
-  const confidenceScore = calculateConfidence(predictedMargin);
+  const homeWinProbability = convertMarginToWinProbability(predictedMargin, metrics.optimal_k);
+  const confidenceScore = calculateConfidence(predictedMargin, metrics.confidence_map);
   const winProbabilityForDisplay = predictedMargin > 0 ? homeWinProbability : 1 - homeWinProbability;
 
-  // THE FIX: We now return the raw, unformatted numbers (e.g., 0.83, 0.63)
+  const keyFactors = metrics.feature_importance
+    .slice(0, 3)
+    .map(f => ({
+      // THE FIX: More intelligent string replacement to create unique, readable labels.
+      factor: f.feature
+        .replace(/_/g, ' ')
+        .replace(' home', ' (Home)')
+        .replace(' away', ' (Away)')
+        .replace(/\b\w/g, l => l.toUpperCase()),
+      impact: getImpactLevel(f.importance)
+    }));
+
+  // THE FIX: Return pure, raw numbers. NO formatting.
   return {
     predictedMargin: predictedMargin,
-    winProbability: winProbabilityForDisplay, // NO MORE MULTIPLYING BY 100 HERE
-    confidenceScore: confidenceScore,         // NO MORE MULTIPLYING BY 100 HERE
-    keyFactors: [
-      { factor: 'Turnover Differential', impact: 'High' },
-      { factor: 'Yards Per Play', impact: 'Medium' },
-      { factor: 'Possession Time', impact: 'Low' }
-    ]
+    winProbability: winProbabilityForDisplay, // e.g., 0.66
+    confidenceScore: confidenceScore,       // e.g., 0.648
+    keyFactors: keyFactors
   };
+};
+
+export const savePrediction = async (predictionData) => {
+  const response = await fetch(`${API_URL}/save_prediction`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(predictionData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to save prediction');
+  }
+
+  return await response.json();
+};
+
+export const getSavedPredictions = async () => {
+  const response = await fetch(`${API_URL}/predictions`);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch saved predictions');
+  }
+
+  return await response.json();
+};
+
+export const deletePrediction = async (predictionId) => {
+  const response = await fetch(`${API_URL}/predictions/${predictionId}`, {
+    method: 'DELETE',
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to delete prediction');
+  }
+
+  return await response.json();
+};
+
+export const getTodaysGames = async (date) => {
+  const url = date ? `${API_URL}/games?date=${date}` : `${API_URL}/games`;
+  const response = await fetch(url);
+
+  if (!response.ok) {
+    throw new Error('Failed to fetch today\'s games');
+  }
+
+  return await response.json();
+};
+
+export const getBulkPredictions = async (date) => {
+  const response = await fetch(`${API_URL}/bulk_predictions`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ date }),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to fetch bulk predictions');
+  }
+
+  return await response.json();
+};
+
+// Standardized prediction accuracy calculation
+export const isPredictionCorrect = (predictedMargin, actualHomeScore, actualAwayScore, isGameFinished) => {
+  if (!isGameFinished || actualHomeScore === null || actualAwayScore === null) {
+    return null; // Can't determine accuracy
+  }
+  
+  const actualMargin = actualHomeScore - actualAwayScore;
+  
+  // Both predicted home win and actual home win, or both predicted away win and actual away win
+  return (predictedMargin > 0 && actualMargin > 0) || (predictedMargin < 0 && actualMargin < 0);
+};
+
+export const savePredictionWithDuplicateCheck = async (predictionData) => {
+  const response = await fetch(`${API_URL}/save_prediction`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(predictionData),
+  });
+
+  if (response.status === 409) {
+    // Handle duplicate case
+    const duplicateData = await response.json();
+    return { duplicate: true, ...duplicateData };
+  }
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to save prediction');
+  }
+
+  return await response.json();
+};
+
+export const replacePrediction = async (predictionId, predictionData) => {
+  const response = await fetch(`${API_URL}/save_prediction/replace/${predictionId}`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(predictionData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to replace prediction');
+  }
+
+  return await response.json();
+};
+
+export const updatePrediction = async (predictionId, predictionData) => {
+  const response = await fetch(`${API_URL}/predictions/${predictionId}`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(predictionData),
+  });
+
+  if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.error || 'Failed to update prediction');
+  }
+
+  return await response.json();
 };
