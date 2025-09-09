@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { getBulkPredictions, savePrediction, isPredictionCorrect } from '../api/predictions';
 import { GlowingEffect } from './ui/glowing-effect';
+import { GameCard, StatCard } from './ui/animated-card';
 import { cn } from "@/lib/utils";
 
 
@@ -156,118 +157,109 @@ const TodaysGames = ({ onSave }) => {
                     pred.isFinished
                   );
                 
+                const gameStatus = pred.isFinished ? 'finished' : pred.isLive ? 'live' : 'upcoming';
+                
                 return (
-                  <div key={pred.gameId} className="bg-white border border-gray-200 rounded-lg p-6 shadow-sm">
-                    {/* Header with team names, time, and status */}
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="flex items-center space-x-3">
-                        <div className="text-lg font-semibold">
-                          {pred.awayTeamName} @ {pred.homeTeamName}
-                        </div>
-                        <div className="text-sm text-gray-500">
-                          {pred.time} EST • {pred.venue}
-                        </div>
+                  <GameCard 
+                    key={pred.gameId}
+                    homeTeam={pred.homeTeamName}
+                    awayTeam={pred.awayTeamName}
+                    status={gameStatus}
+                    className="mb-4"
+                  >
+                    {/* Header with time, venue, and controls */}
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="text-sm text-gray-300">
+                        {pred.time} EST • {pred.venue}
                       </div>
                       <div className="flex items-center space-x-2">
                         {saveMessages[pred.gameId] && (
                           <span className={`text-sm font-medium ${
-                            saveMessages[pred.gameId].includes('Saved') ? 'text-green-600' : 'text-red-600'
+                            saveMessages[pred.gameId].includes('Saved') ? 'text-green-400' : 'text-red-400'
                           }`}>
                             {saveMessages[pred.gameId]}
                           </span>
                         )}
                         {/* Prediction accuracy indicator */}
                         {predictionCorrect !== null && (
-                          <div className={`gr-px-8 gr-py-3 gr-rounded-8 gr-text-xs font-medium ${
+                          <div className={`px-2 py-1 rounded text-xs font-medium ${
                             predictionCorrect 
-                              ? 'bg-green-100 text-green-800' 
-                              : 'bg-red-100 text-red-800'
+                              ? 'bg-green-500/20 text-green-400 border border-green-400/30' 
+                              : 'bg-red-500/20 text-red-400 border border-red-400/30'
                           }`}>
                             {predictionCorrect ? '✓ Correct' : '✗ Wrong'}
                           </div>
                         )}
-                        {/* Game status */}
-                        <div className={`gr-px-13 gr-py-5 gr-rounded-8 gr-text-sm font-medium ${
-                          pred.isFinished ? 'bg-green-100 text-green-800' :
-                          pred.isLive ? 'bg-yellow-100 text-yellow-800' : 
-                          'bg-gray-100 text-gray-800'
-                        }`}>
-                          {pred.status}
-                        </div>
                         {/* Save button */}
-                        <button
-                          onClick={() => handleSavePrediction(pred)}
-                          disabled={savingStates[pred.gameId]}
-                          className="gr-btn gr-btn-success gr-btn-sm gr-text-sm"
-                        >
-                          {savingStates[pred.gameId] ? 'Saving...' : 'Save'}
-                        </button>
+                        <div className="relative">
+                          <GlowingEffect 
+                            spread={40}
+                            glow={true}
+                            disabled={false}
+                            proximity={50}
+                            inactiveZone={0.1}
+                            borderWidth={1}
+                          />
+                          <button
+                            onClick={() => handleSavePrediction(pred)}
+                            disabled={savingStates[pred.gameId]}
+                            className="relative z-10 px-3 py-1 text-sm font-medium bg-green-500/20 text-green-400 border border-green-400/30 rounded hover:bg-green-500/30 transition-colors disabled:opacity-50"
+                          >
+                            {savingStates[pred.gameId] ? 'Saving...' : 'Save'}
+                          </button>
+                        </div>
                       </div>
                     </div>
 
                     {/* Scores for finished/live games */}
                     {(pred.isFinished || pred.isLive) && pred.homeScore !== null && pred.awayScore !== null && (
-                      <div className="gr-mb-13 gr-p-13 bg-gray-50 gr-rounded-8">
-                        <div className="flex items-center justify-center gr-gap-34">
+                      <div className="mb-6 p-4 bg-black/30 rounded-lg border border-white/10">
+                        <div className="flex items-center justify-center gap-8">
                           <div className="text-center">
-                            <div className="gr-text-sm font-medium text-gray-600">{pred.awayTeamName}</div>
-                            <div className="gr-text-4xl font-bold text-gray-900">{pred.awayScore}</div>
+                            <div className="text-sm font-medium text-gray-400">{pred.awayTeamName}</div>
+                            <div className="text-4xl font-bold text-white mt-1">{pred.awayScore}</div>
                           </div>
-                          <div className="gr-text-3xl font-bold text-gray-400">-</div>
+                          <div className="text-3xl font-bold text-gray-500">-</div>
                           <div className="text-center">
-                            <div className="gr-text-sm font-medium text-gray-600">{pred.homeTeamName}</div>
-                            <div className="gr-text-4xl font-bold text-gray-900">{pred.homeScore}</div>
+                            <div className="text-sm font-medium text-gray-400">{pred.homeTeamName}</div>
+                            <div className="text-4xl font-bold text-white mt-1">{pred.homeScore}</div>
                           </div>
                         </div>
                       </div>
                     )}
 
                     {/* Predicted winner indicator */}
-                    <div className="gr-mb-13 text-center">
-                      <div className="gr-text-sm font-medium text-gray-500 gr-mb-5">Predicted Winner</div>
-                      <div className={`inline-flex items-center gr-px-21 gr-py-8 gr-rounded-13 gr-text-xl font-semibold ${
+                    <div className="mb-6 text-center">
+                      <div className="text-sm font-medium text-gray-400 mb-3">Predicted Winner</div>
+                      <div className={`inline-flex items-center px-4 py-2 rounded-lg text-lg font-semibold ${
                         isHomeFavored 
-                          ? 'bg-blue-100 text-blue-800 border-2 border-blue-300' 
-                          : 'bg-purple-100 text-purple-800 border-2 border-purple-300'
+                          ? 'bg-blue-500/20 text-blue-300 border border-blue-400/30' 
+                          : 'bg-purple-500/20 text-purple-300 border border-purple-400/30'
                       }`}>
-                        <span className="mr-2">{isHomeFavored ? '🏠' : '✈️'}</span>
+                        <span className="mr-2 text-xl">{isHomeFavored ? '🏠' : '✈️'}</span>
                         {predictedWinner}
-                        <span className="gr-ml-8 gr-text-sm">
+                        <span className="ml-2 text-sm opacity-75">
                           by {Math.abs(formattedPred.predictedMargin)}
                         </span>
                       </div>
                     </div>
 
                     {/* Prediction stats */}
-                    <div className="grid grid-cols-3 gr-gap-21 text-center">
-                      <div>
-                        <div className="gr-text-sm font-medium text-gray-500">
-                          Predicted Margin
-                        </div>
-                        <div className="gr-mt-5 gr-text-2xl font-semibold text-gray-900">
-                          {formattedPred.predictedMargin > 0 ? 
-                            `+${formattedPred.predictedMargin}` : 
-                            `${formattedPred.predictedMargin}`}
-                        </div>
-                      </div>
-                      <div>
-                        <div className="gr-text-sm font-medium text-gray-500">
-                          Win Probability
-                        </div>
-                        <div className="gr-mt-5 gr-text-2xl font-semibold text-gray-900">
-                          {(formattedPred.winProbability * 100).toFixed(1)}%
-                        </div>
-                      </div>
-                      <div>
-                        <div className="gr-text-sm font-medium text-gray-500">
-                          Confidence Score
-                        </div>
-                        <div className="gr-mt-5 gr-text-2xl font-semibold text-gray-900">
-                          {(formattedPred.confidenceScore * 100).toFixed(1)}%
-                        </div>
-                      </div>
+                    <div className="grid grid-cols-3 gap-4">
+                      <StatCard 
+                        value={formattedPred.predictedMargin > 0 ? `+${formattedPred.predictedMargin}` : `${formattedPred.predictedMargin}`}
+                        label="Margin"
+                      />
+                      <StatCard 
+                        value={`${(formattedPred.winProbability * 100).toFixed(1)}%`}
+                        label="Win Probability"
+                      />
+                      <StatCard 
+                        value={`${(formattedPred.confidenceScore * 100).toFixed(1)}%`}
+                        label="Confidence"
+                      />
                     </div>
-                  </div>
+                  </GameCard>
                 );
               })}
             </div>
