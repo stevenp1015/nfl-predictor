@@ -18,6 +18,7 @@ import { PredictionTest } from '@/components/PredictionTest';
 import { RealStatsCard } from '@/components/RealStatsCard';
 import { GameBrowser } from '@/components/GameBrowser';
 import { BorderTrail } from "@/components/ui/border-trail";
+import { ESPNGameDashboard } from '@/components/ESPNGameDashboard';
 
 interface Team {
   id: string;
@@ -522,7 +523,7 @@ function RecentPredictions() {
 
 export function SportsPredictionDashboard() {
   const [selectedTeam, setSelectedTeam] = useState<Team | null>(null);
-  const [activeTab, setActiveTab] = useState('predictions');
+  const [activeTab, setActiveTab] = useState('games');
   const [selectedGameTeams, setSelectedGameTeams] = useState<{home: string, away: string} | null>(null);
   
   const {
@@ -614,20 +615,25 @@ export function SportsPredictionDashboard() {
           )}
         </motion.div>
 
-        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full"
+        <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value)} className="w-full"
           onSelect={(value) => {
             if (value !== 'predictions') {
               setSelectedGameTeams(null); // Clear selection when leaving tab
             }
           }}
         >
-          <TabsList className="grid w-full grid-cols-5">
+          <TabsList className="grid w-full grid-cols-6">
+            <TabsTrigger value="games">Games</TabsTrigger>
             <TabsTrigger value="predictions">Predictions</TabsTrigger>
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="teams">Teams</TabsTrigger>
             <TabsTrigger value="manage">Manage ({savedPredictions.length})</TabsTrigger>
             <TabsTrigger value="test">🧪 Test Flask</TabsTrigger>
           </TabsList>
+
+          <TabsContent value="games" className="space-y-6">
+            <ESPNGameDashboard />
+          </TabsContent>
 
           <TabsContent value="predictions" className="space-y-6">
             <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
