@@ -19,6 +19,21 @@ IMPORTANT: The App.tsx file is a showcase/example demonstrating the component us
 npm install framer-motion lucide-react @radix-ui/react-slot class-variance-authority @radix-ui/react-avatar @radix-ui/react-separator @radix-ui/react-select clsx tailwind-merge
 ```
 
+
+## Integration Instructions
+
+1. Review the `App.tsx` component in this document to understand the mockup implementation
+2. Identify which components and utilities you need for your use case
+3. Analyze the Tailwind v4 styles in the `index.css` in this document - integrate custom styles and replace existing styles from the Codebase
+4. Integrate the components into your project, adapting them to fit your architecture
+
+**Focus on:**
+  - Understanding projects structure, adding above components into it
+  - Understanding the component composition
+  - Identifying reusable utilities and helpers
+  - Adopting the styling to replace your design system without altering the way it is used
+
+
 ## Styles
 
 ### index.css
@@ -1206,17 +1221,3 @@ Add the following global styles:
 Custom colors detected: muted-foreground, gradient-to-r, gradient-to-br, primary-foreground, secondary-foreground, accent-foreground, card-foreground, popover-foreground
 Make sure these are defined in your Tailwind configuration.
 
-
-## Integration Instructions
-
-1. Review the App.tsx component to understand the complete implementation
-2. Identify which components and utilities you need for your use case
-3. Analyze the Tailwind v4 styles in index.css - integrate custom styles that differ from integrating Codebase
-4. Install the required NPM dependencies listed above
-5. Integrate the components into your project, adapting them to fit your architecture
-
-Focus on:
-- Understanding projects structure, adding above components into it
-- Understanding the component composition
-- Identifying reusable utilities and helpers
-- Adapting the styling to match your design system

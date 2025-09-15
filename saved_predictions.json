@@ -265,5 +265,35 @@
     "id": "1757291040.331249",
     "timestamp": "2025-09-07T20:24:00.331261",
     "updatedAt": "2025-09-08T04:18:37.768626"
+  },
+  {
+    "homeTeam": "PIT",
+    "awayTeam": "SEA",
+    "prediction": {
+      "predictedMargin": 0.1,
+      "winProbability": 0.5075555771671879,
+      "confidenceScore": 0.6,
+      "keyFactors": [
+        {
+          "factor": "Yards Per Play (Home)",
+          "impact": "High"
+        },
+        {
+          "factor": "Turnovers (Away)",
+          "impact": "High"
+        },
+        {
+          "factor": "Yards Per Play (Away)",
+          "impact": "High"
+        }
+      ]
+    },
+    "matchup": "SEA @ PIT",
+    "gameId": "SEA_at_PIT",
+    "venue": "TBD",
+    "date": "2025-09-14",
+    "time": "10:38:35 AM",
+    "id": "1757860715.604839",
+    "timestamp": "2025-09-14T10:38:35.604851"
   }
 ]

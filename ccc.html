@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>The *Actual* Fucking Final Cool Ass Effect</title>
+<style>
+    body {
+        background-color: #0E1017;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+    }
+
+    .input-box {
+        position: relative;
+        width: 350px;
+        overflow: hidden; /* This is important to clip the shimmer */
+        border-radius: 25px;
+    }
+
+    .cool-textbox {
+        width: 100%;
+        height: 50px;
+        padding: 15px;
+        font-size: 18px;
+        font-family: sans-serif;
+        background-color: #2a2a2e; /* Slightly lighter bg */
+        border: 2px solid #555;
+        border-radius: 25px;
+        color: #fff;
+        outline: none;
+        box-sizing: border-box;
+        transition: all 0.3s ease-in-out;
+        z-index: 1;
+        position: relative;
+        resize: none;
+    }
+    
+    .cool-textbox::placeholder {
+        color: #999;
+    }
+
+    .cool-textbox:focus {
+        height: 120px;
+        border-color: #666;
+    }
+
+    /* THE SHIMMERING RAINBOW BAR */
+    .input-box::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        
+        width: 100%;
+        height: 3px;
+        
+        /* The wide gradient with the shine */
+        background: linear-gradient(
+            90deg,
+            transparent, #ff4d4d, #ffc94d, #b3ff66, #4dffc9, #4dc9ff, #c94dff, #ff4dff, transparent
+        );
+        background-size: 300% 100%; /* Gradient is 3x as wide */
+
+        opacity: 0;
+        transition: opacity 0.3s ease-in-out;
+        z-index: 0; /* Behind the textbox */
+    }
+
+    /* THE TRIGGER: On focus, the bar appears AND animates */
+    .input-box:has(.cool-textbox:focus)::after {
+        opacity: 1;
+        animation: shimmer-bottom 2s linear infinite;
+    }
+
+    /* THE SPELL OF MOTION */
+    @keyframes shimmer-bottom {
+        0% {
+            background-position: 150% 0; /* Start far right */
+        }
+        100% {
+            background-position: -150% 0; /* End far left */
+        }
+    }
+
+</style>
+</head>
+<body>
+
+    <div class="input-box">
+        <textarea class="cool-textbox" placeholder="Ask anything"></textarea>
+    </div>
+
+</body>
+</html>
