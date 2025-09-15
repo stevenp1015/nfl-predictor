@@ -4,7 +4,7 @@ import { ChevronLeft, ChevronRight, MapPin, Clock, Trophy, Zap } from 'lucide-re
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BorderTrail } from '@/components/ui/border-trail';
+import { BorderTrailEnhanced } from '@/components/ui/border-trail-enhanced';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { useNFLData } from '@/hooks/use-nfl-data';
@@ -61,8 +61,9 @@ function GameCard({ event, onClick, isExpanded }: GameCardProps) {
   const status = getStatusIndicator(event.date, event.status.type.state);
   const { date, time } = formatEasternTime(event.date, event.competitions[0]?.date.split('T')[1]);
 
-  // Border trail from away to home team color
-  const trailColors = ['#' + (away.color || '888'), '#' + (home.color || '888')];
+  // Team colors for dynamic border trail
+  const awayColor = '#' + (away.color || '888');
+  const homeColor = '#' + (home.color || '888');
 
   const cardVariants = {
     collapsed: { scale: 1, zIndex: 1 },
@@ -78,14 +79,20 @@ function GameCard({ event, onClick, isExpanded }: GameCardProps) {
       className="relative cursor-pointer"
       onClick={onClick}
     >
-      <Card className="relative overflow-hidden">
+      <Card
+        className="relative overflow-hidden"
+        style={!isExpanded ? {
+
+        } : undefined}
+      >
         {!isExpanded && (
-          <BorderTrail
-            transition={{ duration: 4, repeat: Infinity }}
-            size={20}
-            style={{
-              background: `linear-gradient(90deg, ${trailColors[0]}, ${trailColors[1]})`
-            }}
+          <BorderTrailEnhanced
+            duration={12}
+            size={200}
+            fromColor={awayColor}
+            toColor={homeColor}
+            trailWidth={2}
+            borderRadius="0.75rem" // Explicitly match Card's rounded-xl
           />
         )}
 
