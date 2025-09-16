@@ -1,0 +1,64 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+  }
+}
+
+@layer components {
+  .glass-pane {
+    @apply rounded-3xl border border-[var(--dark-border)] shadow-xl shadow-black/20;
+    background-color: var(--dark-pane);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+}
+
+@layer utilities {
+    .perspective-container {
+        perspective: 1200px;
+    }
+
+    .preserve-3d {
+        transform-style: preserve-3d;
+    }
+
+    .backface-hidden {
+        backface-visibility: hidden;
+        -webkit-backface-visibility: hidden;
+    }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) skewX(-15deg); }
+  100% { transform: translateX(200%) skewX(-15deg); }
+}
+
+@keyframes pulse-glow-cyan {
+    0%, 100% { box-shadow: 0 0 20px 5px var(--glow-cyan), 0 0 5px 1px var(--glow-cyan) inset; }
+    50% { box-shadow: 0 0 35px 8px var(--glow-cyan), 0 0 8px 2px var(--glow-cyan) inset; }
+}
+
+@keyframes pulse-glow-fuchsia {
+    0%, 100% { box-shadow: 0 0 20px 5px var(--glow-fuchsia), 0 0 5px 1px var(--glow-fuchsia) inset; }
+    50% { box-shadow: 0 0 35px 8px var(--glow-fuchsia), 0 0 8px 2px var(--glow-fuchsia) inset; }
+}
+
+@keyframes background-pan {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotateZ(0deg); }
+  50% { transform: translateY(-10px) rotateZ(0.5deg); }
+}
+
+@keyframes probability-stream {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}

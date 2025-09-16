@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, MapPin, Clock, Trophy, Zap } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card'; // Card is used inside ShimmerBorder
 import { Badge } from '@/components/ui/badge';
-import { BorderTrailEnhanced } from '@/components/ui/border-trail-enhanced';
+import { ShimmerBorder } from '@/components/ui/shimmer-border';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 import { Separator } from '@/components/ui/separator';
 import { useNFLData } from '@/hooks/use-nfl-data';
@@ -12,8 +12,20 @@ import { usePrediction, usePredictions } from '@/hooks/usePredictions';
 import type { Event, Team, Competitor } from '@/types';
 
 // Utility function to format Eastern time
+// Utility function to format Eastern time
 function formatEasternTime(dateStr: string, timeStr?: string): { date: string; time: string } {
-  const date = new Date(`${dateStr}T${timeStr || '12:00:00'}`);
+  if (!dateStr || dateStr === 'TBD') {
+    return { time: 'TBD', date: 'TBD' };
+  }
+
+  // Extract date part if it includes time
+  const cleanDateStr = dateStr.includes('T') ? dateStr.split('T')[0] : dateStr;
+
+  const date = new Date(`${cleanDateStr}T${timeStr || '12:00:00'}`);
+  if (isNaN(date.getTime())) {
+    return { time: 'TBD', date: cleanDateStr };
+  }
+
   const options: Intl.DateTimeFormatOptions = {
     timeZone: 'America/New_York',
     hour: 'numeric',
@@ -25,7 +37,21 @@ function formatEasternTime(dateStr: string, timeStr?: string): { date: string; t
 
   const formatted = date.toLocaleString('en-US', options).replace(',', '');
   const [time, datePart] = formatted.split(' ');
-  return { time, date: datePart || 'Today' };
+  return { time: time || 'TBD', date: datePart || 'Today' };
+}
+
+// Utility function to get game date in EST for comparisons
+function getGameDateEST(gameDate: string): Date {
+  const utc = new Date(gameDate);
+  const estFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  const formatted = estFormatter.format(utc).split('/');
+  // formatted is ['09', '15', '2025']
+  return new Date(`${formatted[2]}-${formatted[0].padStart(2, '0')}-${formatted[1].padStart(2, '0')}`);
 }
 
 // Get team logo path - use ESPNs logo or fallback
@@ -35,16 +61,22 @@ function getTeamLogo(team: Team): string {
 
 // Status indicators
 function getStatusIndicator(gameDate: string, state: string): { color: string; label: string } {
-  const today = new Date();
-  const gameDay = new Date(gameDate);
-  const isToday = gameDay.toDateString() === today.toDateString();
+  const estFormatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  });
+  const gameDateEST = estFormatter.format(getGameDateEST(gameDate));
+  const todayEST = estFormatter.format(new Date());
+  const isToday = gameDateEST === todayEST;
 
   switch (state) {
     case 'pre':
-      return isToday ? { color: '#eab308', label: 'TODAY' } : { color: '#3b82f6', label: 'UPCOMING' };
-    case 'in': return { color: '#ef4444', label: 'LIVE' };
-    case 'post': return { color: '#6b7280', label: 'FINISHED' };
-    default: return { color: '#6b7280', label: 'UPCOMING' };
+      return isToday ? { color: 'var(--color-chart-4)', label: 'TODAY' } : { color: 'var(--color-chart-5)', label: 'UPCOMING' };
+    case 'in': return { color: 'var(--color-chart-2)', label: 'LIVE' };
+    case 'post': return { color: 'var(--color-muted-foreground)', label: 'FINISHED' };
+    default: return { color: 'var(--color-chart-5)', label: 'UPCOMING' };
   }
 }
 
@@ -55,11 +87,24 @@ interface GameCardProps {
 }
 
 function GameCard({ event, onClick, isExpanded }: GameCardProps) {
-  const [homeTeam, awayTeam] = event.competitions[0].competitors.sort((a, b) => a.homeAway === 'home' ? 1 : -1);
+  const competition = event.competitions[0];
+  const homeTeam = competition.competitors.find(c => c.homeAway === 'home');
+  const awayTeam = competition.competitors.find(c => c.homeAway === 'away');
+
+  if (!homeTeam || !awayTeam) {
+    return null; // Or some fallback UI
+  }
+
   const home = homeTeam.team;
   const away = awayTeam.team;
   const status = getStatusIndicator(event.date, event.status.type.state);
-  const { date, time } = formatEasternTime(event.date, event.competitions[0]?.date.split('T')[1]);
+  const competitionDate = event.competitions[0]?.date;
+  let timeStr;
+  if (competitionDate && typeof competitionDate === 'string') {
+    const timePart = competitionDate.includes('T') ? competitionDate.split('T')[1] : null;
+    timeStr = timePart ? timePart.replace('Z', '') : undefined;
+  }
+  const { date, time } = formatEasternTime(event.date || 'TBD', timeStr);
 
   // Team colors for dynamic border trail
   const awayColor = '#' + (away.color || '888');
@@ -74,114 +119,176 @@ function GameCard({ event, onClick, isExpanded }: GameCardProps) {
     <motion.div
       layout
       variants={cardVariants}
-      animate={isExpanded ? 'expanded' : 'collapsed'}
-      transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-      className="relative cursor-pointer"
+      animate={isExpanded ? 'expanded' 
+                          : 'collapsed'}
+      transition={{ type: 'spring',
+                    stiffness: 300}}
+      className={"relative cursor-pointer" + (isExpanded ? ' expanded' : '')}
+      whileHover={{ scale: 1.05,
+                    zIndex: 10 }}
+      whileTap={{ scale: 0.95 }}
       onClick={onClick}
     >
-      <Card
-        className="relative overflow-hidden"
-        style={!isExpanded ? {
+      <ShimmerBorder
+        fromColor={awayColor}
+        toColor={homeColor}
+        duration={12}
+        active={!isExpanded}
 
-        } : undefined}
       >
-        {!isExpanded && (
-          <BorderTrailEnhanced
-            duration={12}
-            size={200}
-            fromColor={awayColor}
-            toColor={homeColor}
-            trailWidth={2}
-            borderRadius="0.75rem" // Explicitly match Card's rounded-xl
-          />
-        )}
+        <Card
+          className="border-[10px] rounded-2xl"
+          style={{ background: `linear-gradient(45deg, ${awayColor}6A, ${homeColor}6A)` }} // 2A is 13% opacity, 1A is 5% opacity, 0A is 0% opacity. the "A" stands for alpha, and it is used to control the opacity of the color instead of rgba. the reason for that is that rgba is not supported in CSS gradients.
+        >
+          <CardContent className="p-4 space-y-3 bg-transparent">
+            {/* Status Badge */}
+            <div className="flex justify-between items-center">
+              <span className="text-xs font-semibold">
+                {away.shortDisplayName} @ {home.shortDisplayName}
+              </span>
+              <Badge style={{ backgroundColor: status.color, color: 'white' }} className="text-xs">
+                {status.label}
+              </Badge>
+            </div>
 
-        <CardContent className="p-4 space-y-3">
-          {/* Status Badge */}
-          <div className="flex justify-between items-center">
-            <span className="text-xs font-semibold">
-              {away.shortDisplayName} @ {home.shortDisplayName}
-            </span>
-            <Badge style={{ backgroundColor: status.color, color: 'white' }} className="text-xs">
-              {status.label}
-            </Badge>
-          </div>
+            {/* Team Logos */}
+            <div className="flex items-center justify-center gap-4">
+              <div className="flex flex-col items-center">
+                <Avatar className="w-14 h-14">
+                  <AvatarImage src={getTeamLogo(away)} />
+                  <AvatarFallback style={{ backgroundColor: away.color }}>{away.abbreviation}</AvatarFallback>
+                </Avatar>
+                <span style={{ color: parseInt(awayTeam.score) > parseInt(homeTeam.score) ? 'var(--color-chart-2)' : 'var(--color-chart-1)' }} className="text-2xl font-semibold text-muted-foreground">{awayTeam.score}</span>
+              </div>
+              <span className="text-lg font-semibold text-muted-foreground">@</span>
+              <div className="flex flex-col items-center">
+                <Avatar className="w-14 h-14">
+                  <AvatarImage src={getTeamLogo(home)} />
+                  <AvatarFallback style={{ backgroundColor: home.color }}>{home.abbreviation}</AvatarFallback>
+                </Avatar>
+                <span style={{ color: parseInt(awayTeam.score) > parseInt(homeTeam.score) ? 'var(--color-chart-1)' : 'var(--color-chart-2)' }} className="text-2xl font-semibold text-muted-foreground">{homeTeam.score}</span>
+              </div>
+            </div>
 
-          {/* Team Logos */}
-          <div className="flex items-center justify-center gap-4">
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={getTeamLogo(away)} />
-              <AvatarFallback style={{ backgroundColor: away.color }}>{away.abbreviation}</AvatarFallback>
-            </Avatar>
-            <span className="text-lg">VS</span>
-            <Avatar className="w-12 h-12">
-              <AvatarImage src={getTeamLogo(home)} />
-              <AvatarFallback style={{ backgroundColor: home.color }}>{home.abbreviation}</AvatarFallback>
-            </Avatar>
-          </div>
+            {/* Score/Time */}
+            <div className="text-center text-lg font-semibold text-muted-foreground">
+              {event.status.type.state === 'post'? (<span 
+                                                     style={{color: 
+                                                     parseInt(awayTeam.score) > parseInt(homeTeam.score)
+                                                     ? 'var(--color-chart-2)' 
+                                                     : 'var(--color-chart-1)' }}>
+                                                     FINAL
+                                                     </span>)
 
-          {/* Score/Time */}
-          <div className="text-center text-xs text-muted-foreground">
-            {event.status.type.state === 'post' ? (
-              <span>{awayTeam.score}-{homeTeam.score} FINAL</span>
-            ) : event.status.type.state === 'in' ? (
-              <span>{awayTeam.score}-{homeTeam.score} • {event.status.displayClock} Q{event.status.period}</span>
-            ) : (
-              <span>{date}, {time}</span>
-            )}
-          </div>
-        </CardContent>
-      </Card>
+                                                 : event.status.type.state === 'in'? (<span 
+                                                                                       style={{ color:
+                                                                                       parseInt(awayTeam.score) > parseInt(homeTeam.score)
+                                                                                       ? 'var(--color-chart-2)' 
+                                                                                       : 'var(--color-chart-1)' }}>
+                                                                                       {event.status.displayClock} Q{event.status.period}
+                                                                                       </span>) 
+                                                                                   : (<span>
+                                                                                       {date}, {time}
+                                                                                      </span>
+                                                                                   )}
+            </div>
+          </CardContent>
+        </Card>
+      </ShimmerBorder>
     </motion.div>
   );
 }
 
 interface ExpandedGameDetailsProps {
   event: Event;
-  prediction: any;
+  prediction: any; 
   savedPredictions: any[];
 }
 
 function ExpandedGameDetails({ event, prediction, savedPredictions }: ExpandedGameDetailsProps) {
-  const [homeTeam, awayTeam] = event.competitions[0].competitors.sort((a, b) => a.homeAway === 'home' ? 1 : -1);
+  const competition = event.competitions[0];
+  const homeTeam = competition.competitors.find(c => c.homeAway === 'home');
+  const awayTeam = competition.competitors.find(c => c.homeAway === 'away');
+
+  if (!homeTeam || !awayTeam) {
+    return null; // Or some fallback UI
+  }
+
   const home = homeTeam.team;
   const away = awayTeam.team;
   const weather = event.weather;
 
   // Find historical prediction
   const historicalPrediction = savedPredictions.find(pred =>
-    pred.homeTeam === home.abbreviation && pred.awayTeam === away.abbreviation
+                               pred.homeTeam === home.abbreviation && // Check if the `homeTeam` property of the `pred` object is equal to the `abbreviation` property of the `home` object
+                               pred.awayTeam === away.abbreviation // Check if the `awayTeam` property of the `pred` object is equal to the `abbreviation` property of the `away` object
   );
-
-  const predictedWinner = prediction?.predictedMargin > 0 ? home.shortDisplayName : away.shortDisplayName;
+//
+  const predictedWinner = prediction?.predictedMargin > 0
+                        ? home.shortDisplayName 
+                        : away.shortDisplayName;
+//
   const actualMargin = parseInt(homeTeam.score) - parseInt(awayTeam.score);
-  const isCorrect = historicalPrediction &&
-    ((prediction?.predictedMargin > 0 && actualMargin > 0) ||
-     (prediction?.predictedMargin < 0 && actualMargin < 0));
-
+//
+  const isCorrect = historicalPrediction && (
+                  ( prediction?.predictedMargin > 0 && actualMargin > 0) ||
+                  ( prediction?.predictedMargin < 0 && actualMargin < 0) );
+//
   return (
     <motion.div
-      initial={{ opacity: 0, height: 0 }}
-      animate={{ opacity: 1, height: 'auto' }}
-      exit={{ opacity: 0, height: 0 }}
-      className="mt-4 p-4 bg-muted/50 rounded-lg space-y-3"
-    >
-      <div className="grid grid-cols-2 gap-4">
-        {/* Venue */}
-        <div className="flex items-center gap-2 text-sm">
-          <MapPin className="w-4 h-4" />
-          <span>{event.competitions[0]?.venue?.fullName || 'TBD'}</span>
-        </div>
+        initial={{ opacity: 0,
+                   height: 0 }}
+        animate={{ opacity: 1,
+                   height: 'auto' }}
+        exit=   {{ opacity: 0,
+                   height: 0 }}
+        className="mt-4 
+                   p-4 
+                   bg-muted/50 
+                   rounded-lg 
+                   space-y-3"
+        >
+{/* Teams */}
+<div 
+    className="grid 
+               grid-cols-2 
+               gap-4">
+  {/* Venue */}
+  <div 
+        className="flex 
+                   items-center 
+                   gap-2 
+                   text-sm">
+  {/* Map Pin Icon */}                      
+  <MapPin 
+        className="w-4 
+                   h-4"/>
+  {/* Venue Name */}                      
+        <span>
+                  {event.competitions[0]
+                  ?.venue?.fullName || 
+                  'TBD'}
+        </span>
+  </div>
+  {/* Weather */}
+  <div 
+        className="flex 
+                   items-center 
+                   gap-2 
+                   text-sm">
+  {/* Weather Icon */}                      
+        <span>    "weathericon"
+        </span>
+        <span>
+                  {weather?.displayValue || 
+                  'N/A'}
+        </span>
+  </div>
 
-        {/* Weather */}
-        <div className="flex items-center gap-2 text-sm">
-          <span>🏈</span>
-          <span>{weather?.displayValue || 'N/A'}</span>
-        </div>
-      </div>
+</div>
 
-      {/* Prediction */}
-      {prediction && (
+        {/* Prediction */}
+        {prediction && (
         <>
           <Separator />
           <div className="flex items-center justify-between text-sm">
@@ -236,13 +343,32 @@ export function ESPNGameDashboard() {
     if (isExpanding && !gamePredictions[eventId]) {
       // Generate prediction for this game
       const comp = event.competitions[0];
-      const [homeTeam, awayTeam] = comp.competitors.map(c => c.team.abbreviation);
-      await fetchPrediction(homeTeam, awayTeam);
+      const homeCompetitor = comp.competitors.find(c => c.homeAway === 'home');
+      const awayCompetitor = comp.competitors.find(c => c.homeAway === 'away');
+
+      if (homeCompetitor && awayCompetitor) {
+        const homeTeamAbbr = homeCompetitor.team.abbreviation;
+        const awayTeamAbbr = awayCompetitor.team.abbreviation;
+        await fetchPrediction(homeTeamAbbr, awayTeamAbbr);
+      } else {
+        console.error("Could not determine home and away teams for event:", event.id);
+      }
     }
   };
 
-  const weekEvents = events.filter(e => e.week.number === currentWeek);
-  const currentWeekData = calendar?.[0]?.entries.find(e => e.value === currentWeek.toString());
+  const currentWeekData = calendar?.[0]?.entries?.find(e => e.value === currentWeek.toString());
+
+  const weekEvents = useMemo(() => {
+    if (!currentWeekData) return events.filter(e => e.week.number === currentWeek);
+
+    const startEST = getGameDateEST(currentWeekData.startDate);
+    const endEST = getGameDateEST(currentWeekData.endDate);
+
+    return events.filter(e => {
+      const gameDateEST = getGameDateEST(e.date);
+      return gameDateEST >= startEST && gameDateEST <= endEST;
+    });
+  }, [events, currentWeek, currentWeekData]);
 
   return (
     <div className="w-full max-w-7xl mx-auto p-6 space-y-6">
@@ -296,31 +422,37 @@ export function ESPNGameDashboard() {
         </AnimatePresence>
 
         {weekEvents.map(event => (
-          <AnimatePresence key={`expanded-${event.id}`}>
-            {expandedCard === event.id && (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.95 }}
-                className="col-span-full"
-              >
-                <Card className="mt-4">
-                  <CardContent>
-                    <ExpandedGameDetails
-                      event={event}
-                      prediction={prediction}
-                      savedPredictions={savedPredictions}
-                    />
-                  </CardContent>
-                </Card>
-              </motion.div>
-            )}
-          </AnimatePresence>
+            <AnimatePresence key={`expanded-${event.id}`}>
+                                 {expandedCard === event.id && 
+                  (<motion.div
+                              initial={{ opacity: 0, scale: 0.95 }}
+                              animate={{ opacity: 1, scale: 1 }}
+                              exit={{ opacity: 0, scale: 0.95 }}
+                              className="col-span-full"
+                  >
+
+                  <Card 
+                        className="mt-4">
+                    <CardContent>
+                      <ExpandedGameDetails
+                            event={event}
+                            prediction={prediction}
+                            savedPredictions={savedPredictions}
+                      />
+                    </CardContent>
+                  </Card>
+                  </motion.div>
+                  )}
+            </AnimatePresence>
         ))}
+
       </motion.div>
 
       {!loading && weekEvents.length === 0 && (
-        <div className="text-center text-muted-foreground">No games scheduled for this week.</div>
+        <div className="text-center 
+                        text-muted-foreground">
+                        No games scheduled for this week.
+        </div>
       )}
     </div>
   );

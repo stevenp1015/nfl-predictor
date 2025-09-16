@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NFL Machine Intelligence Command Center</title>
+    <meta
+      name="description"
+      content="An immersive NFL analytics lab blending machine learning predictions, simulated betting, and performance telemetry."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Orbitron:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="index.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --font-sans: "Inter", sans-serif;
+        --font-display: "Orbitron", sans-serif;
+        --dark-bg: #030712;
+        --dark-pane: rgba(17, 24, 39, 0.6);
+        --dark-border: rgba(255, 255, 255, 0.1);
+        --glow-cyan: rgba(34, 211, 238, 0.5);
+        --glow-fuchsia: rgba(217, 70, 239, 0.5);
+        --glow-emerald: rgba(52, 211, 153, 0.6);
+      }
+      body {
+        font-family: var(--font-sans);
+        background-color: var(--dark-bg);
+        color: #f9fafb;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        perspective: 1200px;
+      }
+      ::-webkit-scrollbar {
+        width: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      ::-webkit-scrollbar-thumb {
+        background-color: var(--dark-border);
+        border-radius: 20px;
+        border: 3px solid transparent;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react/": "https://aistudiocdn.com/react@^19.1.1/",
+          "react": "https://aistudiocdn.com/react@^19.1.1",
+          "react-dom/client": "https://aistudiocdn.com/react-dom@^19.1.1/client",
+          "lucide-react": "https://aistudiocdn.com/lucide-react@^0.544.0",
+          "date-fns": "https://aistudiocdn.com/date-fns@^4.1.0",
+          "framer-motion": "https://aistudiocdn.com/framer-motion@^12.23.12",
+          "recharts": "https://aistudiocdn.com/recharts@^3.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.1.1/"
+        }
+      }
+    </script>
+  <link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>

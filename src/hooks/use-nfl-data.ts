@@ -115,14 +115,17 @@ export function useNFLData(): NFLDataState & UseNFLDataActions {
   }, []);
 
   const findCurrentNFLWeek = (date: Date, calendar: CalendarEntry[]): number | null => {
+    // Convert date to UTC date string for comparison
+    const dateUTC = formatDate(date);
+
     // First, find the Regular Season entry specifically
     const regularSeason = calendar.find(e => e.label === "Regular Season");
     if (!regularSeason?.entries) return null;
 
     for (const week of regularSeason.entries) {
-      const start = new Date(week.startDate);
-      const end = new Date(week.endDate);
-      if (date >= start && date <= end) {
+      const startUTC = week.startDate.split('T')[0];
+      const endUTC = week.endDate.split('T')[0];
+      if (dateUTC >= startUTC && dateUTC <= endUTC) {
         return parseInt(week.value);
       }
     }
@@ -130,9 +133,9 @@ export function useNFLData(): NFLDataState & UseNFLDataActions {
     // Fallback to any entry if no regular season found
     for (const entry of calendar) {
       for (const week of entry.entries) {
-        const start = new Date(week.startDate);
-        const end = new Date(week.endDate);
-        if (date >= start && date <= end) {
+        const startUTC = week.startDate.split('T')[0];
+        const endUTC = week.endDate.split('T')[0];
+        if (dateUTC >= startUTC && dateUTC <= endUTC) {
           return parseInt(week.value);
         }
       }
@@ -151,21 +154,28 @@ export function useNFLData(): NFLDataState & UseNFLDataActions {
       for (const entry of calendar) {
         const week = entry.entries.find(w => parseInt(w.value) === weekNumber);
         if (week) {
-          // Extract date part only (remove T time)
-          startDate = week.startDate.split('T')[0];
-          endDate = week.endDate.split('T')[0];
+          // Extend range by 1 day to capture games crossing midnight UTC
+          const start = new Date(week.startDate);
+          const end = new Date(week.endDate);
+          const extendedStart = addDays(start, -1);
+          const extendedEnd = addDays(end, 1);
+          startDate = formatDate(extendedStart);
+          endDate = formatDate(extendedEnd);
           break;
         }
       }
     }
 
-    // Fallback to calculation if no calendar
+    // Fallback to calculation if no calendar - extend by 1 day
     if (!startDate || !endDate) {
       const today = new Date();
       const startOfSeason = new Date(today.getFullYear(), 8, 1);
       const weekStart = addDays(startOfSeason, (weekNumber - 1) * 7);
-      startDate = formatDate(weekStart);
-      endDate = formatDate(addDays(weekStart, 6));
+      const weekEnd = addDays(weekStart, 6);
+      const extendedStart = addDays(weekStart, -1);
+      const extendedEnd = addDays(weekEnd, 1);
+      startDate = formatDate(extendedStart);
+      endDate = formatDate(extendedEnd);
     }
 
     // Fetch for the week range
@@ -189,16 +199,16 @@ export function useNFLData(): NFLDataState & UseNFLDataActions {
   const getWeekEvents = useCallback((week: number) =>
     state.events.filter(e => e.week.number === week), [state.events]);
 
-  // Poll for live updates every 3-5 minutes
+  // Poll for live updates every 3-5 minutes for current week
   useEffect(() => {
     const pollInterval = setInterval(() => {
-      if (state.currentWeek && state.events.some(e => e.status.type.state === 'in')) {
-        refreshCurrentWeek();
+      if (state.currentWeek) {
+        loadWeekData(parseInt(state.currentWeek));
       }
     }, 3 * 60 * 1000); // 3 minutes
 
     return () => clearInterval(pollInterval);
-  }, [state.currentWeek, state.events, refreshCurrentWeek]);
+  }, [state.currentWeek, loadWeekData]);
 
   useEffect(() => {
     loadInitialData();

@@ -12,7 +12,7 @@ export class ScoreboardService {
       : `${ScoreboardService.CACHE_PREFIX}_data_${date}`;
 
     // Check if we have valid cached data
-    const cached = this.getCachedData(cacheKey);
+    const cached = this.getCachedData<ScoreboardResponse>(cacheKey); 
     if (cached) return cached;
 
     // Fetch fresh data

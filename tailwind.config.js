@@ -7,6 +7,9 @@ export default {
   ],
   theme: {
   	extend: {
+		animation: {
+			'spin-slow': 'spin var(shimmer-duration, 10s) linear infinite',
+		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',

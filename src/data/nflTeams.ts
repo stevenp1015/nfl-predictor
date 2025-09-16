@@ -27,7 +27,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#00338D',
     secondaryColor: '#C60C30',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/BUF',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/BUF.png',
     record: '10-2',
     stats: { offense: 88, defense: 85, recent: 'W4' }
   },
@@ -40,7 +40,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#008E97',
     secondaryColor: '#FC4C02',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/MIA',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/MIA.png',
     record: '6-6',
     stats: { offense: 75, defense: 72, recent: 'L2' }
   },
@@ -53,7 +53,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#002244',
     secondaryColor: '#C60C30',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/NE',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/NE.png',
     record: '3-9',
     stats: { offense: 65, defense: 68, recent: 'L4' }
   },
@@ -66,7 +66,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#125740',
     secondaryColor: '#000000',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/NYJ',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/NYJ.png',
     record: '4-8',
     stats: { offense: 70, defense: 75, recent: 'L3' }
   },
@@ -81,7 +81,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#241773',
     secondaryColor: '#9E7C0C',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/BAL',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/BAL.png',
     record: '8-4',
     stats: { offense: 90, defense: 80, recent: 'W3' }
   },
@@ -94,7 +94,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#FB4F14',
     secondaryColor: '#000000',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/CIN',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/CIN.png',
     record: '5-7',
     stats: { offense: 82, defense: 70, recent: 'W2' }
   },
@@ -107,7 +107,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#311D00',
     secondaryColor: '#FF3C00',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/CLE',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/CLE.png',
     record: '3-9',
     stats: { offense: 60, defense: 65, recent: 'L2' }
   },
@@ -120,7 +120,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#FFB612',
     secondaryColor: '#101820',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/PIT',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/PIT.png',
     record: '9-3',
     stats: { offense: 78, defense: 88, recent: 'W1' }
   },
@@ -135,7 +135,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#03202F',
     secondaryColor: '#A71930',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/HOU',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/HOU.png',
     record: '8-4',
     stats: { offense: 84, defense: 76, recent: 'W2' }
   },
@@ -148,7 +148,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#002C5F',
     secondaryColor: '#A2AAAD',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/IND',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/IND.png',
     record: '6-6',
     stats: { offense: 74, defense: 78, recent: 'W1' }
   },
@@ -161,7 +161,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#101820',
     secondaryColor: '#D7A22A',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/JAX',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/JAX.png',
     record: '3-9',
     stats: { offense: 68, defense: 62, recent: 'L5' }
   },
@@ -174,7 +174,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#0C2340',
     secondaryColor: '#4B92DB',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/TEN',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/TEN.png',
     record: '3-9',
     stats: { offense: 65, defense: 70, recent: 'L3' }
   },
@@ -189,7 +189,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#FB4F14',
     secondaryColor: '#002244',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/DEN',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/DEN.png',
     record: '8-4',
     stats: { offense: 78, defense: 85, recent: 'W4' }
   },
@@ -202,7 +202,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#E31837',
     secondaryColor: '#FFB612',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/KC',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/KC.png',
     record: '11-1',
     stats: { offense: 92, defense: 78, recent: 'W5' }
   },
@@ -215,7 +215,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#000000',
     secondaryColor: '#A5ACAF',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/LV',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/LV.png',
     record: '3-9',
     stats: { offense: 72, defense: 58, recent: 'L8' }
   },
@@ -228,7 +228,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#0080C6',
     secondaryColor: '#FFC20E',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/LAC',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/LAC.png',
     record: '7-5',
     stats: { offense: 80, defense: 82, recent: 'W2' }
   },
@@ -243,7 +243,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#003594',
     secondaryColor: '#041E42',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/DAL',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/DAL.png',
     record: '5-7',
     stats: { offense: 76, defense: 64, recent: 'L5' }
   },
@@ -256,7 +256,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#0B2265',
     secondaryColor: '#A71930',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/NYG',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/NYG.png',
     record: '2-10',
     stats: { offense: 58, defense: 62, recent: 'L7' }
   },
@@ -269,7 +269,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#004C54',
     secondaryColor: '#A5ACAF',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/PHI',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/PHI.png',
     record: '10-2',
     stats: { offense: 89, defense: 81, recent: 'W8' }
   },
@@ -282,7 +282,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'East',
     primaryColor: '#5A1414',
     secondaryColor: '#FFB612',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/WAS',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/WSH.png',
     record: '8-4',
     stats: { offense: 83, defense: 74, recent: 'W3' }
   },
@@ -297,7 +297,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#0B162A',
     secondaryColor: '#C83803',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/CHI',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/CHI.png',
     record: '4-8',
     stats: { offense: 70, defense: 75, recent: 'L6' }
   },
@@ -310,7 +310,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#0076B6',
     secondaryColor: '#B0B7BC',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/DET',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/DET.png',
     record: '11-1',
     stats: { offense: 95, defense: 79, recent: 'W10' }
   },
@@ -323,7 +323,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#203731',
     secondaryColor: '#FFB612',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/GB',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/GB.png',
     record: '9-3',
     stats: { offense: 86, defense: 81, recent: 'W1' }
   },
@@ -336,7 +336,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'North',
     primaryColor: '#4F2683',
     secondaryColor: '#FFC62F',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/MIN',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/MIN.png',
     record: '6-6',
     stats: { offense: 79, defense: 73, recent: 'L2' }
   },
@@ -351,7 +351,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#A71930',
     secondaryColor: '#000000',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/ATL',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ATL.png',
     record: '6-6',
     stats: { offense: 77, defense: 70, recent: 'L1' }
   },
@@ -364,7 +364,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#0085CA',
     secondaryColor: '#101820',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/CAR',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/CAR.png',
     record: '3-9',
     stats: { offense: 62, defense: 66, recent: 'W2' }
   },
@@ -377,7 +377,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#101820',
     secondaryColor: '#D3BC8D',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/NO',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/NO.png',
     record: '4-8',
     stats: { offense: 69, defense: 71, recent: 'L7' }
   },
@@ -390,7 +390,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'South',
     primaryColor: '#D50A0A',
     secondaryColor: '#FF7900',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/TB',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/TB.png',
     record: '6-6',
     stats: { offense: 81, defense: 76, recent: 'L3' }
   },
@@ -405,7 +405,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#97233F',
     secondaryColor: '#000000',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/ARI',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/ARI.png',
     record: '6-6',
     stats: { offense: 74, defense: 69, recent: 'W3' }
   },
@@ -418,7 +418,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#003594',
     secondaryColor: '#FFA300',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/LAR',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/LAR.png',
     record: '6-6',
     stats: { offense: 78, defense: 74, recent: 'L1' }
   },
@@ -431,7 +431,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#AA0000',
     secondaryColor: '#B3995D',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/SF',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/SF.png',
     record: '5-7',
     stats: { offense: 82, defense: 80, recent: 'L3' }
   },
@@ -444,7 +444,7 @@ export const NFL_TEAMS: Record<string, NFLTeam> = {
     division: 'West',
     primaryColor: '#002244',
     secondaryColor: '#69BE28',
-    logo: 'https://static.www.nfl.com/image/private/t_headshot_desktop/league/api/clubs/logos/SEA',
+    logo: 'https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/SEA.png',
     record: '7-5',
     stats: { offense: 83, defense: 75, recent: 'W2' }
   },
